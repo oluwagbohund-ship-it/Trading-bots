@@ -1,0 +1,34 @@
+name: CI Build & Test
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # If your zip file is committed in the repo or downloaded during the workflow:
+      - name: Unzip Archive
+        run: |
+          # Replace 'your-archive.zip' with your actual zip file name
+          # and '-d destination_folder' with where you want it extracted
+          unzip -o your-archive.zip -d .
+          
+          # OR if it's a tar.gz archive:
+          # tar -xzf your-archive.tar.gz
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Build
+        run: npm run build
